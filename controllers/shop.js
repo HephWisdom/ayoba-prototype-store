@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
+const User = require('../models/user');
 
 exports.getProducts = (req, res, next) => {
   Product.find()
@@ -29,19 +30,35 @@ exports.getProduct = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-exports.getIndex = (req, res, next) => {
-  Product.find()
-    .then(products => {
-      res.render('shop/index', {
-        prods: products,
-        pageTitle: 'Shop',
-        path: '/'
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+
+// exports.getIndex = (req, res, next) => {
+//   Product.find()
+//     .then(products => {
+//       res.render('shop/index', {
+//         prods: products,
+//         pageTitle: 'Shop',
+//         path: '/'
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// };
+
+
+//test
+exports.getIndex = (req, res) => {
+  User.find({}).exec(function(err, users) {   
+      if (err) throw err;
+      res.render('stores/stores', { 
+        path: '/',
+        pageTitle: 'Your Stores',
+        "users": users });
+  });
 };
+
+//test
+
 
 exports.getCart = (req, res, next) => {
   req.user
